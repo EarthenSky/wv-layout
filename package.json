@@ -6,7 +6,7 @@
     "main": "dist/bundle.js",
     "scripts": {
         "build": "webpack",
-        "start": "http-server"
+        "start": "http-server --cors='*' -c-1"
     },
     "devDependencies": {
         "http-server": "^14.1.1",

@@ -26,19 +26,20 @@ button {
     border-radius: 10px; 
     
     font-weight: 900;
+
+    cursor: pointer;
 }
 
 .blue-button {
     color:#fff; 
-    background-color: #00abee;
-    transition: transform 0.1s ease-in-out, background-color 0.1s;
+    background-color: #13b9fa;
+    transition: transform 0.05s ease-out, background-color 0.1s;
 }
 
 .blue-button:hover {
-    background-color: #0da1db; 
+    background-color: #00abee; 
 }
 
 .blue-button:active {
-    background-color: #12a8e4; 
-    transform: translateX(8px);
+    background-color: #0885d8; 
 }
