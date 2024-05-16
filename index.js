@@ -137,6 +137,7 @@ class ImportListener extends Listener {
 
 const importListener = new ImportListener();
 
+// TODO: do optimization to find last reference of import, go to next few lines, then cut off file -> multiline import? -> or even, start there & parse until passing the last import
 export function getImportsFromCode(codeText) {
     let chars = new antlr4.InputStream(codeText);
     let lexer = new Lexer(chars);
@@ -145,7 +146,7 @@ export function getImportsFromCode(codeText) {
     let tree = parser.file_input();
 
     antlr4.tree.ParseTreeWalker.DEFAULT.walk(importListener, tree);
-    console.log(importListener.importModuleList);
+    return importListener.importModuleList;
 }
 
 // getImportsFromCode(samplePython3Code);
