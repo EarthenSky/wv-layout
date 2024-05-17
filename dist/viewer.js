@@ -1,39 +1,87 @@
 const svg = document.getElementById('svg');
 const g = svg.children[0];
 
-let canvasTranslation = {
+let canvasTransform = {
     x: 0,
     y: 0,
+    scale: 1.0,
 }
+function updateCanvasTransform() {
+    g.setAttribute("transform", "translate(" + canvasTransform.x + " " + canvasTransform.y + ") scale(" + canvasTransform.scale + ")");
+    svg.style.backgroundPosition = (canvasTransform.x + 0) + "px " + (canvasTransform.y + 0) + "px";
+    svg.style.backgroundSize = 16*canvasTransform.scale + "px";
+}
+updateCanvasTransform();
 
 let mouseLocation = {
     x: 0,
     y: 0,
 }
-let isLeftMouseDown = false;
+let moveCanvas = false;
+let moveTarget = null;
+
+// This function assumes the group has only one transform, translate
+function getGroupTranslate(group) {
+    let transformString = group.getAttribute("transform");
+    let x = parseFloat(transformString.split(" ")[0].split("(")[1]);
+    let y = parseFloat(transformString.split(" ")[1]);
+    return [x, y];
+}
+function setGroupTranslate(group, x, y) {
+    group.setAttribute("transform", "translate(" + (x) + " " + (y) + ")");
+}
 
 svg.addEventListener('mousedown', event => {
-    if (event.button == 0)
-        isLeftMouseDown = true;
+    if (event.button == 0) {
+        if (event.target == svg) {
+            moveCanvas = true;
+        } else {
+            // try to move the target
+            let targetGroup = event.target.closest("g");
+            if (targetGroup !== g) {
+                moveTarget = targetGroup;
+            }
+        }
+    }
 });
 window.addEventListener('mouseup', event => {
-    if (event.button == 0)
-        isLeftMouseDown = false;
+    if (event.button == 0) {
+        moveCanvas = false;
+
+        if (moveTarget !== null) {
+            // ensure moveTarget snaps to grid before dropping it
+            let [x, y] = getGroupTranslate(moveTarget);
+            setGroupTranslate(
+                moveTarget,
+                Math.round(x / 16) * 16, 
+                Math.round(y / 16) * 16,
+            );
+            moveTarget = null;
+        }
+    }
 });
 window.addEventListener('mousemove', event => {
-    if (isLeftMouseDown) {
-        let diffX = event.clientX - mouseLocation.x;
-        let diffY = event.clientY - mouseLocation.y;
+    let diffX = event.clientX - mouseLocation.x;
+    let diffY = event.clientY - mouseLocation.y;
 
-        canvasTranslation.x += diffX;
-        canvasTranslation.y += diffY;
+    if (moveCanvas) {
+        canvasTransform.x += diffX;
+        canvasTransform.y += diffY;
 
-        g.setAttribute("transform", "translate(" + canvasTranslation.x + " " + canvasTranslation.y + ")");
-        svg.style.backgroundPosition = canvasTranslation.x + "px " + canvasTranslation.y + "px";
+        updateCanvasTransform();
+    } else if (moveTarget !== null) {
+        let [x, y] = getGroupTranslate(moveTarget);
+        setGroupTranslate(moveTarget, x + diffX / canvasTransform.scale, y + diffY / canvasTransform.scale);
+        console.log(diffX / canvasTransform.scale);
     }
 
     mouseLocation.x = event.clientX;
     mouseLocation.y = event.clientY;
 });
-
-// TODO: add scrolling & coloured bounding boxes for elements -> also movement of boxes & alignment with the grid
+// TODO: fix scaling to be per-location
+svg.addEventListener("wheel", event => {
+    canvasTransform.scale *= 1.0 - event.deltaY/1000;
+    if (canvasTransform.scale < 0.01) 
+        canvasTransform.scale = 0.01;
+    updateCanvasTransform();
+});

@@ -43,3 +43,36 @@ button {
 .blue-button:active {
     background-color: #0885d8; 
 }
+
+.no-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+/* svg styles ------------------------------- */
+
+svg {
+    font-family: consolas;
+}
+
+.parent {
+    display: block;
+}
+
+.text {
+    fill: #fff;
+    font-weight: 400;
+    margin: auto;
+}
+
+.box {
+    border-radius: 16px;
+}
+.parent:hover > .box {
+    cursor: pointer;
+    fill: var(--hover-color);
+}
+.parent:hover > .text {
+    cursor: pointer;
+}
