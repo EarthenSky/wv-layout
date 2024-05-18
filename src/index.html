@@ -2,7 +2,9 @@
 <html>
     <head>
         <title>Wavicle Layout</title>
-        <link rel="stylesheet" href="main.css">
+        <!-- TODO: add this to webpack? -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <!-- NOTE: webpack will link to scripts & stuff here -->
     </head>
     
     <body>
@@ -33,9 +35,4 @@
         </div>
     </body>
 
-    <!-- https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="bundle.js" type="module"></script>
-    <script src="main.js" type="module"></script>
-    <script src="viewer.js" type="module"></script>
 </html>

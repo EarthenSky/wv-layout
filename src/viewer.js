@@ -40,6 +40,7 @@ svg.addEventListener('mousedown', event => {
             let targetGroup = event.target.closest("g");
             if (targetGroup !== g) {
                 moveTarget = targetGroup;
+                moveTarget.parentElement.appendChild(moveTarget); // bring to front
             }
         }
     }
@@ -49,6 +50,9 @@ window.addEventListener('mouseup', event => {
         moveCanvas = false;
 
         if (moveTarget !== null) {
+            // TODO: ensure that boxes can't overlap, and that they'll be lerped over 0.2s to the closet free location.
+            // TODO: how to determine the direction of least density? at least an approximation would be nice...
+
             // ensure moveTarget snaps to grid before dropping it
             let [x, y] = getGroupTranslate(moveTarget);
             setGroupTranslate(
@@ -72,7 +76,6 @@ window.addEventListener('mousemove', event => {
     } else if (moveTarget !== null) {
         let [x, y] = getGroupTranslate(moveTarget);
         setGroupTranslate(moveTarget, x + diffX / canvasTransform.scale, y + diffY / canvasTransform.scale);
-        console.log(diffX / canvasTransform.scale);
     }
 
     mouseLocation.x = event.clientX;

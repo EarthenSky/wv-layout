@@ -9,9 +9,12 @@
         "start": "http-server --cors='*' -c-1"
     },
     "devDependencies": {
+        "html-webpack-plugin": "^5.6.0",
+        "html-webpack-tags-plugin": "^3.0.2",
         "http-server": "^14.1.1",
         "webpack": "^5.91.0",
-        "webpack-cli": "^5.1.4"
+        "webpack-cli": "^5.1.4",
+        "webpack-shell-plugin-next": "^2.3.1"
     },
     "dependencies": {
         "antlr4": "^4.13.1-patch-1"

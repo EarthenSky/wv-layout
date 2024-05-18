@@ -1,7 +1,7 @@
 import antlr4 from 'antlr4';
-import Lexer from './parser/Python3Lexer.js';
-import Parser from './parser/Python3Parser.js';
-import Listener from './parser/Python3ParserListener.js';
+import Lexer from '../parser/Python3Lexer.js';
+import Parser from '../parser/Python3Parser.js';
+import Listener from '../parser/Python3ParserListener.js';
 
 // TODO: download code from a repo online
 export const samplePython3Code = `
@@ -148,6 +148,3 @@ export function getImportsFromCode(codeText) {
     antlr4.tree.ParseTreeWalker.DEFAULT.walk(importListener, tree);
     return importListener.importModuleList;
 }
-
-// getImportsFromCode(samplePython3Code);
-// console.log("done parsing!");

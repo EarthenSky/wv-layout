@@ -1,4 +1,6 @@
-import { samplePython3Code, getImportsFromCode } from './bundle.js';
+import { samplePython3Code, getImportsFromCode } from './parser.js'
+
+// TODO: gui.js
 
 let owner = "encode"
 let repo  = "httpx"
@@ -19,7 +21,7 @@ const colours = {
 }
 
 const PAD = 16;
-const WIDTH = 128;
+const MIN_WIDTH = 128;
 const HEIGHT = 64;
 const svg = document.getElementById('svg');
 const g = svg.children[0];
@@ -46,14 +48,13 @@ function createSVGBox(name, position) {
 
     g.appendChild(group);
 
-    let boxWidth = Math.max(WIDTH, Math.ceil(newText.getBBox().width / 16 + 2 * PAD / 16) * 16);
+    let boxWidth = Math.max(MIN_WIDTH, Math.ceil(newText.getBBox().width / 16 + 2 * PAD / 16) * 16);
     colouredBox.setAttribute('width', boxWidth);
     colouredBox.setAttribute('height', HEIGHT);
 
     // get properties after the text is rendered
     newText.setAttribute('x', boxWidth * 0.5);
     newText.setAttribute('y', HEIGHT * 0.5);
-    
 }
 
 async function loadLayout() {
