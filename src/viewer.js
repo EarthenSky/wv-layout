@@ -81,7 +81,7 @@ window.addEventListener('mousemove', event => {
     mouseLocation.x = event.clientX;
     mouseLocation.y = event.clientY;
 });
-// TODO: fix scaling to be per-location
+// TODO: fix zoom scaling to be per-location
 svg.addEventListener("wheel", event => {
     canvasTransform.scale *= 1.0 - event.deltaY/1000;
     if (canvasTransform.scale < 0.01) 

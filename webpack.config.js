@@ -17,6 +17,7 @@ export default {
     plugins: [
         new HtmlWebpackPlugin({
             template: "src/index.html",
+            scriptLoading: "module",
         }),
         new HtmlWebpackTagsPlugin({ 
             tags: ['main.css'], 
